@@ -1,41 +1,41 @@
 package csvsdb
 
 import (
-	"github.com/mabetle/mcsv"
-	"github.com/github.com/mabetle/mcore/msdb"
 	"fmt"
+	"github.com/mabetle/mcore/msdb"
+	"github.com/mabetle/mcsv"
 )
 
-type CsvTable struct{
+type CsvTable struct {
 	*msdb.BaseTable
 	body [][]string
 }
 
-func NewSimpleTable(file string)msdb.SimpleTable{
+func NewSimpleTable(file string) msdb.SimpleTable {
 	return NewCsvTable(file)
 }
 
-func NewCsvTable(file string)*CsvTable{
-	table:=new(CsvTable)
-	bt:=new(msdb.BaseTable)
+func NewCsvTable(file string) *CsvTable {
+	table := new(CsvTable)
+	bt := new(msdb.BaseTable)
 	table.BaseTable = bt
 
-	csv:=mcsv.NewCSV(file)
+	csv := mcsv.NewCSV(file)
 	table.BaseTable.Header = csv.GetHeaderRow()
 	table.body = csv.GetData()
 	table.BaseTable.Cusor = new(msdb.Cusor)
 	table.BaseTable.Cusor.MaxIndex = len(table.body)
 
-	table.StringGetter =  table
+	table.StringGetter = table
 
 	return table
 }
 
 // overide BaseTable
-func (t *CsvTable)GetString(col int)(value string){
+func (t *CsvTable) GetString(col int) (value string) {
 	//TODO out of range?
-	defer func(){
-		if err:=recover();err!=nil{
+	defer func() {
+		if err := recover(); err != nil {
 			fmt.Println(err)
 		}
 	}()
@@ -44,13 +44,12 @@ func (t *CsvTable)GetString(col int)(value string){
 }
 
 // Random Access
-func (t *CsvTable)GetRowColString(row , col int)(value string){
-	defer func(){
-		if err:=recover();err!=nil{
+func (t *CsvTable) GetRowColString(row, col int) (value string) {
+	defer func() {
+		if err := recover(); err != nil {
 			fmt.Println(err)
 		}
 	}()
 	value = t.body[row][col]
 	return
 }
-

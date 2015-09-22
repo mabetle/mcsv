@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/mabetle/mcsv/csvsdb"
-	"github.com/github.com/mabetle/mcore/msdb"
+	"github.com/mabetle/mcore/msdb"
 	"github.com/mabetle/mcsv"
-	"github.com/github.com/mabetle/mcore"
+	"github.com/mabetle/mcore"
 )
 
 var csvFile = "../data/demo.csv"
